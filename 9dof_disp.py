@@ -64,9 +64,6 @@ display.show()
 time.sleep(1.0)
 
 while True:
-	# Clear the image
-	display.fill(0)
-
 	if not btnA.value:
 		flag_A = True
 		flag_B = False
