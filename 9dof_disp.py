@@ -63,46 +63,53 @@ except RuntimeError as error:
 display.show()
 time.sleep(1.0)
 
-while True:
-	if not btnA.value:
-		flag_A = True
-		flag_B = False
-		flag_C = False
+try:
+	while True:
+		if not btnA.value:
+			flag_A = True
+			flag_B = False
+			flag_C = False
 
-	if not btnB.value:
-		flag_A = False
-		flag_B = True
-		flag_C = False
+		if not btnB.value:
+			flag_A = False
+			flag_B = True
+			flag_C = False
 
-	if not btnC.value:
-		flag_A = False
-		flag_B = False
-		flag_C = True
+		if not btnC.value:
+			flag_A = False
+			flag_B = False
+			flag_C = True
 
-	if flag_A:
-		accel_x, accel_y, accel_z = mag_accel.accelerometer
-		display.fill(0)
-		display.text('Acceleration (m/s^2):', 0, 0, 1)
-		# height - gap pixels - # of rows
-		display.text("x: {0:0.3f}".format(accel_x), 0, height - 2 - 3 * lh, 1)
-		display.text("y: {0:0.3f}".format(accel_y), 0, height - 1 - 2 * lh, 1)
-		display.text("z: {0:0.3f}".format(accel_z), 0, height - 0 - 1 * lh, 1)
+		if flag_A:
+			accel_x, accel_y, accel_z = mag_accel.accelerometer
+			display.fill(0)
+			display.text('Acceleration (m/s^2):', 0, 0, 1)
+			# height - gap pixels - # of rows
+			display.text("x: {0:0.3f}".format(accel_x), 0, height - 2 - 3 * lh, 1)
+			display.text("y: {0:0.3f}".format(accel_y), 0, height - 1 - 2 * lh, 1)
+			display.text("z: {0:0.3f}".format(accel_z), 0, height - 0 - 1 * lh, 1)
 
-	if flag_B:
-		mag_x, mag_y, mag_z = mag_accel.magnetometer
-		display.fill(0)
-		display.text('Magnetometer (uTesla):', 0, 0, 1)
-		display.text("x: {0:0.3f}".format(mag_x), 0, height - 2 - 3 * lh, 1)
-		display.text("y: {0:0.3f}".format(mag_y), 0, height - 1 - 2 * lh, 1)
-		display.text("z: {0:0.3f}".format(mag_z), 0, height - 0 - 1 * lh, 1)
+		if flag_B:
+			mag_x, mag_y, mag_z = mag_accel.magnetometer
+			display.fill(0)
+			display.text('Magnetometer (uTesla):', 0, 0, 1)
+			display.text("x: {0:0.3f}".format(mag_x), 0, height - 2 - 3 * lh, 1)
+			display.text("y: {0:0.3f}".format(mag_y), 0, height - 1 - 2 * lh, 1)
+			display.text("z: {0:0.3f}".format(mag_z), 0, height - 0 - 1 * lh, 1)
 
-	if flag_C:
-		gyro_x, gyro_y, gyro_z = gyro.gyroscope
-		display.fill(0)
-		display.text('Gyroscope (radians/s):', 0, 0, 1)
-		display.text("x: {0:0.3f}".format(gyro_x), 0, height - 2 - 3 * lh, 1)
-		display.text("y: {0:0.3f}".format(gyro_y), 0, height - 1 - 2 * lh, 1)
-		display.text("z: {0:0.3f}".format(gyro_z), 0, height - 0 - 1 * lh, 1)
+		if flag_C:
+			gyro_x, gyro_y, gyro_z = gyro.gyroscope
+			display.fill(0)
+			display.text('Gyroscope (radians/s):', 0, 0, 1)
+			display.text("x: {0:0.3f}".format(gyro_x), 0, height - 2 - 3 * lh, 1)
+			display.text("y: {0:0.3f}".format(gyro_y), 0, height - 1 - 2 * lh, 1)
+			display.text("z: {0:0.3f}".format(gyro_z), 0, height - 0 - 1 * lh, 1)
 
+		display.show()
+		time.sleep(0.2)
+
+except KeyboardInterrupt:
+	# can these screens burn? i don't know.
+	# until we get some kinda screen saving going. don't burn the screen. in case that can happen.
+	display.fill(0)
 	display.show()
-	time.sleep(0.2)
