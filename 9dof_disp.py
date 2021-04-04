@@ -63,24 +63,35 @@ except RuntimeError as error:
 display.show()
 time.sleep(1.0)
 
+last_press = time.time()
+screen_saver = False
+
 try:
 	while True:
 		if not btnA.value:
 			flag_A = True
 			flag_B = False
 			flag_C = False
+			last_press = time.time()
 
 		if not btnB.value:
 			flag_A = False
 			flag_B = True
 			flag_C = False
+			last_press = time.time()
 
 		if not btnC.value:
 			flag_A = False
 			flag_B = False
 			flag_C = True
+			last_press = time.time()
 
-		if flag_A:
+		if ((time.time() - last_press) > 64):
+			screen_saver = True
+		else:
+			screen_saver = False
+
+		if flag_A and not screen_saver:
 			accel_x, accel_y, accel_z = mag_accel.accelerometer
 			display.fill(0)
 			display.text('Acceleration (m/s^2):', 0, 0, 1)
@@ -89,7 +100,7 @@ try:
 			display.text("y: {0:0.3f}".format(accel_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(accel_z), 0, height - 0 - 1 * lh, 1)
 
-		if flag_B:
+		if flag_B and not screen_saver:
 			mag_x, mag_y, mag_z = mag_accel.magnetometer
 			display.fill(0)
 			display.text('Magnetometer (uTesla):', 0, 0, 1)
@@ -97,13 +108,16 @@ try:
 			display.text("y: {0:0.3f}".format(mag_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(mag_z), 0, height - 0 - 1 * lh, 1)
 
-		if flag_C:
+		if flag_C and not screen_saver:
 			gyro_x, gyro_y, gyro_z = gyro.gyroscope
 			display.fill(0)
 			display.text('Gyroscope (radians/s):', 0, 0, 1)
 			display.text("x: {0:0.3f}".format(gyro_x), 0, height - 2 - 3 * lh, 1)
 			display.text("y: {0:0.3f}".format(gyro_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(gyro_z), 0, height - 0 - 1 * lh, 1)
+
+		if screen_saver:
+			display.fill(0)
 
 		display.show()
 		time.sleep(0.2)
