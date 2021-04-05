@@ -19,6 +19,8 @@ to do:
 - [x] protoype hardware
 - [x] build hardware
 - [x] test hardware
+- [x] basic screensaver
+- [ ] fancy screen saver(s)?
 - [ ] an enclosure might be nice?
 - [ ] send data over LoRa
 - [ ] receive data over LoRa
