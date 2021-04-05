@@ -49,9 +49,6 @@ flag_A = True
 flag_B = False
 flag_C = False
 
-display.fill(0)
-display.show()
-
 try:
 	rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
 	display.text('RFM9x: Detected', 0, 0, 1)
