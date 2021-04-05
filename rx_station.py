@@ -47,6 +47,7 @@ i = 0
 try:
 	while True:
 
+		packet = None
 		packet = rfm9x.receive()
 		if packet is None:
 			display.fill(0)
