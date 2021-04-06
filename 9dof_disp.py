@@ -64,6 +64,7 @@ time.sleep(1.0)
 
 last_press = time.time()
 screen_saver = False
+i = 0
 
 try:
 	while True:
@@ -115,7 +116,15 @@ try:
 			display.text("y: {0:0.3f}".format(gyro_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(gyro_z), 0, height - 0 - 1 * lh, 1)
 
-		data_packet = bytes("x: {0:0.3f} m/s^2\ny: {1:0.3f} m/s^2\nz: {2:0.3f} m/s^2\n".format(accel_x, accel_y, accel_z), "utf-8")
+		if i == 0:
+			data_packet = bytes("ax: {0:0.3f} m/s^2\nay: {1:0.3f} m/s^2\naz: {2:0.3f} m/s^2\n".format(accel_x, accel_y, accel_z), "utf-8")
+		if i == 1:
+			data_packet = bytes("mx: {0:0.3f} uT\nmy: {1:0.3f} uT\nmz: {2:0.3f} uT\n".format(mag_x, mag_y, mag_z), "utf-8")
+		if i == 2:
+			data_packet = bytes("gx: {0:0.3f} rad/s\ngy: {1:0.3f} rad/s\ngz: {2:0.3f} rad/s\n".format(gyro_x, gyro_y, gyro_z), "utf-8")
+			i = -1
+
+		i += 1
 		rfm9x.send(data_packet)
 
 		if screen_saver:
