@@ -41,7 +41,7 @@ except RuntimeError as error:
 display.show()
 time.sleep(1.0)
 
-last_press = time.time()
+last_packet = time.time()
 screen_saver = False
 i = 0
 
@@ -63,6 +63,7 @@ try:
 				i = -1
 			display.show()
 			i += 1
+			last_packet = time.time()
 		else:
 			# Display the packet text and rssi
 			display.fill(0)
@@ -71,16 +72,14 @@ try:
 				packet_text = str(prev_packet, "utf-8")
 				display.text(packet_text, 0, 0, 1)
 				print(packet_text)
+				last_packet = time.time()
 			except:
 				# throw away, try again.
 				packet_text = None
-			last_press = time.time()
 			time.sleep(1)
 
-		if ((time.time() - last_press) > 64):
-			# wait to we have sth sensible
-			# screen_saver = True
-			screen_saver = False
+		if ((time.time() - last_packet) > 64):
+			screen_saver = True
 		else:
 			screen_saver = False
 
@@ -92,6 +91,5 @@ try:
 
 except:
 	# can these screens burn? i don't know.
-	# until we get some kinda screen saving going. don't burn the screen. in case that can happen.
 	display.fill(0)
 	display.show()
