@@ -123,7 +123,7 @@ try:
 		display.show()
 		time.sleep(0.9)
 
-except KeyboardInterrupt:
+except:
 	# can these screens burn? i don't know.
 	# until we get some kinda screen saving going. don't burn the screen. in case that can happen.
 	display.fill(0)
