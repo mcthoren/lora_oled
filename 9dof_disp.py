@@ -50,7 +50,8 @@ flag_B = False
 flag_C = False
 
 try:
-	rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+	rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 433.0)
+	rfm9x.tx_power = 20
 	display.text('RFM9x: Detected', 0, 0, 1)
 except RuntimeError as error:
 	# Thrown on version mismatch
@@ -88,8 +89,8 @@ try:
 		else:
 			screen_saver = False
 
+		accel_x, accel_y, accel_z = mag_accel.accelerometer
 		if flag_A and not screen_saver:
-			accel_x, accel_y, accel_z = mag_accel.accelerometer
 			display.fill(0)
 			display.text('Acceleration (m/s^2):', 0, 0, 1)
 			# height - gap pixels - # of rows
@@ -113,11 +114,14 @@ try:
 			display.text("y: {0:0.3f}".format(gyro_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(gyro_z), 0, height - 0 - 1 * lh, 1)
 
+		data_packet = bytes(str(accel_x), "utf-8")
+		rfm9x.send(data_packet)
+
 		if screen_saver:
 			display.fill(0)
 
 		display.show()
-		time.sleep(0.2)
+		time.sleep(0.9)
 
 except KeyboardInterrupt:
 	# can these screens burn? i don't know.
