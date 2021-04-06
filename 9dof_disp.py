@@ -135,6 +135,5 @@ try:
 
 except:
 	# can these screens burn? i don't know.
-	# until we get some kinda screen saving going. don't burn the screen. in case that can happen.
 	display.fill(0)
 	display.show()

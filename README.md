@@ -22,8 +22,8 @@ to do:
 - [x] basic screensaver
 - [ ] fancy screen saver(s)?
 - [ ] an enclosure might be nice?
-- [ ] send data over LoRa
-- [ ] receive data over LoRa
+- [x] send data over LoRa
+- [x] receive data over LoRa
 - [ ] hook up plotting
 - [ ] webpage
 - [ ] calibrate
