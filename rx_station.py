@@ -30,8 +30,9 @@ RESET = DigitalInOut(board.D25)
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 
 try:
-	rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+	rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 433.0)
 	display.text('RFM9x: Detected', 0, 0, 1)
+	rfm9x.tx_power = 5
 except RuntimeError as error:
 	# Thrown on version mismatch
 	display.text('RFM9x: ERROR', 0, 0, 1)
@@ -70,6 +71,7 @@ try:
 				packet_text = str(prev_packet, "utf-8")
 				display.text('RX: ', 0, 0, 1)
 				display.text(packet_text, 25, 0, 1)
+				print(packet_text)
 			except:
 				# throw away, try again.
 				packet_text = None
