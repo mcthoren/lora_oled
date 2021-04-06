@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# -*- coding: UTF-8 -*-
 
 # Thanks again to adafruit for all the sample code and boards!
 #
@@ -98,23 +99,23 @@ try:
 			display.text("y: {0:0.3f}".format(accel_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(accel_z), 0, height - 0 - 1 * lh, 1)
 
+		mag_x, mag_y, mag_z = mag_accel.magnetometer
 		if flag_B and not screen_saver:
-			mag_x, mag_y, mag_z = mag_accel.magnetometer
 			display.fill(0)
 			display.text('Magnetometer (uTesla):', 0, 0, 1)
 			display.text("x: {0:0.3f}".format(mag_x), 0, height - 2 - 3 * lh, 1)
 			display.text("y: {0:0.3f}".format(mag_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(mag_z), 0, height - 0 - 1 * lh, 1)
 
+		gyro_x, gyro_y, gyro_z = gyro.gyroscope
 		if flag_C and not screen_saver:
-			gyro_x, gyro_y, gyro_z = gyro.gyroscope
 			display.fill(0)
 			display.text('Gyroscope (radians/s):', 0, 0, 1)
 			display.text("x: {0:0.3f}".format(gyro_x), 0, height - 2 - 3 * lh, 1)
 			display.text("y: {0:0.3f}".format(gyro_y), 0, height - 1 - 2 * lh, 1)
 			display.text("z: {0:0.3f}".format(gyro_z), 0, height - 0 - 1 * lh, 1)
 
-		data_packet = bytes(str(accel_x), "utf-8")
+		data_packet = bytes("x: {0:0.3f} m/s^2\ny: {1:0.3f} m/s^2\nz: {2:0.3f} m/s^2\n".format(accel_x, accel_y, accel_z), "utf-8")
 		rfm9x.send(data_packet)
 
 		if screen_saver:
