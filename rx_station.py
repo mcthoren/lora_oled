@@ -69,8 +69,7 @@ try:
 			prev_packet = packet
 			try:
 				packet_text = str(prev_packet, "utf-8")
-				display.text('RX: ', 0, 0, 1)
-				display.text(packet_text, 25, 0, 1)
+				display.text(packet_text, 0, 0, 1)
 				print(packet_text)
 			except:
 				# throw away, try again.
