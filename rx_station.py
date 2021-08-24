@@ -12,7 +12,7 @@
 #
 # Author: Brent Rubell for Adafruit Industries
 
-import time, busio, board, adafruit_ssd1306, adafruit_rfm9x, adafruit_fxos8700, adafruit_fxas21002c
+import time, datetime, sys, busio, board, adafruit_ssd1306, adafruit_rfm9x, adafruit_fxos8700, adafruit_fxas21002c
 from digitalio import DigitalInOut, Direction, Pull
 
 sys.path.append('/import/home/ghz/repos/wxlib')
@@ -45,7 +45,7 @@ display.show()
 time.sleep(1.0)
 
 dat_fname = '9dof_raw.dat'
-# note this isn't /import/home, this is on the SD card
+# note: this isn't /import/home, this is on the SD card
 wx_dir = "/home/ghz/9dof"
 
 last_packet = time.monotonic()
@@ -80,7 +80,7 @@ try:
 				packet_text = str(prev_packet, "utf-8")
 				display.text(packet_text, 0, 0, 1)
 				print(packet_text)
-				wx.write_out_dat_stamp_iso(ts, dat_fname, packet_text, wx_dir)
+				wx.write_out_dat_stamp_iso(ts, dat_fname, ts+'\t'+packet_text.rstrip().replace("\n", "\t")+'\n', wx_dir)
 				last_packet = time.monotonic()
 			except:
 				# throw away, try again.
