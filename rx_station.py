@@ -15,6 +15,9 @@
 import time, busio, board, adafruit_ssd1306, adafruit_rfm9x, adafruit_fxos8700, adafruit_fxas21002c
 from digitalio import DigitalInOut, Direction, Pull
 
+sys.path.append('/import/home/ghz/repos/wxlib')
+import wxlib as wx
+
 reset_pin = DigitalInOut(board.D4)
 i2c = busio.I2C(board.SCL, board.SDA)
 display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c, reset=reset_pin)
@@ -40,6 +43,10 @@ except RuntimeError as error:
 
 display.show()
 time.sleep(1.0)
+
+dat_fname = '9dof_raw.dat'
+# note this isn't /import/home, this is on the SD card
+wx_dir = "/home/ghz/9dof"
 
 last_packet = time.monotonic()
 screen_saver = False
@@ -69,9 +76,11 @@ try:
 			display.fill(0)
 			prev_packet = packet
 			try:
+				ts = datetime.datetime.fromtimestamp(time.time()).strftime("%FT%TZ")
 				packet_text = str(prev_packet, "utf-8")
 				display.text(packet_text, 0, 0, 1)
 				print(packet_text)
+				wx.write_out_dat_stamp_iso(ts, dat_fname, packet_text, wx_dir)
 				last_packet = time.monotonic()
 			except:
 				# throw away, try again.
