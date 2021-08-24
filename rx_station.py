@@ -41,7 +41,7 @@ except RuntimeError as error:
 display.show()
 time.sleep(1.0)
 
-last_packet = time.time()
+last_packet = time.monotonic()
 screen_saver = False
 i = 0
 
@@ -63,7 +63,7 @@ try:
 				i = -1
 			display.show()
 			i += 1
-			last_packet = time.time()
+			last_packet = time.monotonic()
 		else:
 			# Display the packet text and rssi
 			display.fill(0)
@@ -72,13 +72,13 @@ try:
 				packet_text = str(prev_packet, "utf-8")
 				display.text(packet_text, 0, 0, 1)
 				print(packet_text)
-				last_packet = time.time()
+				last_packet = time.monotonic()
 			except:
 				# throw away, try again.
 				packet_text = None
 			time.sleep(1)
 
-		if ((time.time() - last_packet) > 64):
+		if ((time.monotonic() - last_packet) > 64):
 			screen_saver = True
 		else:
 			screen_saver = False
