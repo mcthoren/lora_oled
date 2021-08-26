@@ -23,7 +23,7 @@ grep "gx:" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/gyro.dat.2-3_day"
 grep "ax:" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/accel.dat.2-3_day"
 
 cd /home/ghz/9dof/plots || exit 1
-# gnuplot "${NDoF_DIR}/linty.9dof.gnuplot"
+gnuplot "${NDoF_DIR}/linty.9dof.gnuplot"
 
 sync
 
