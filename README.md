@@ -24,6 +24,6 @@ to do:
 - [ ] an enclosure might be nice?
 - [x] send data over LoRa
 - [x] receive data over LoRa
-- [ ] hook up plotting
+- [x] hook up plotting
 - [ ] webpage
 - [ ] calibrate
