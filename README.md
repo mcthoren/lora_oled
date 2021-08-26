@@ -25,5 +25,5 @@ to do:
 - [x] send data over LoRa
 - [x] receive data over LoRa
 - [x] hook up plotting
-- [ ] webpage
+- [x] webpage
 - [ ] calibrate
