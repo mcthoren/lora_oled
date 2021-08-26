@@ -12,7 +12,7 @@
 #
 # Author: Brent Rubell for Adafruit Industries
 
-import time, datetime, sys, busio, board, adafruit_ssd1306, adafruit_rfm9x, adafruit_fxos8700, adafruit_fxas21002c
+import time, datetime, sys, busio, board, adafruit_ssd1306, adafruit_rfm9x
 from digitalio import DigitalInOut, Direction, Pull
 
 sys.path.append('/import/home/ghz/repos/wxlib')
