@@ -27,6 +27,7 @@ gnuplot "${NDoF_DIR}/linty.9dof.gnuplot"
 
 sync
 
-# /usr/bin/rsync -ur --timeout=50 /home/ghz/9dof/ "${NDoF_DIR}/" wx_0x0a_sync:/wx_0x0a/ # 2> /dev/null
+/usr/bin/rsync -ur --timeout=50 --exclude='.git' /home/ghz/9dof/ "${NDoF_DIR}/" \
+	wx_0x0a_sync:/wx_0x0a/ # 2> /dev/null
 
 rm "${LOCK}"
