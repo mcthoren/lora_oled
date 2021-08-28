@@ -18,9 +18,9 @@ touch "${LOCK}"
 "${WT_DIR}/grab_48h" "${DAT_DIR}" 9dof_raw.dat
 
 # seive out the 3 diff sensors. this opens up the possibility of stricter REs if necessary.
-grep "mx:" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/mag.dat.2-3_day"
-grep "gx:" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/gyro.dat.2-3_day"
-grep "ax:" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/accel.dat.2-3_day"
+grep -a "mx:\ .*\ uT$" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/mag.dat.2-3_day"
+grep -a "gx:\ .*\ rad/s$" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/gyro.dat.2-3_day"
+grep -a "ax:\ .*\ m/s\^2$" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/accel.dat.2-3_day"
 
 cd /home/ghz/9dof/plots || exit 1
 gnuplot "${NDoF_DIR}/linty.9dof.gnuplot"
