@@ -19,24 +19,34 @@ gyro_dat_f='/home/ghz/9dof/data/gyro.dat.2-3_day'
 mag_dat_f='/home/ghz/9dof/data/mag.dat.2-3_day'
 out_d='/home/ghz/9dof/plots/'
 
+# cal x accel against 0 with the assumption we shouldn't be measuring any accel outside the earth's
+# rotation and orbit. assume we aren't sensitive enough to measure acceleration due to earth's rotation
+# or orbit.
 set title "Accelerometer Data over the Last \\~48 Hours"
 set ylabel "Acceleration (x-axis) (m/s^2)"
 set y2label "Acceleration (x-axis) (m/s^2)"
 set output out_d.'accel_x.png'
-plot accel_dat_f using 1:3 title 'Acceleration (x-axis)' with points linecolor rgb "#00ff00", \
-accel_dat_f using 1:3 title 'Acceleration (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#aa00aa" smooth bezier
+plot accel_dat_f using 1:(($3 + 0.9411)) title 'Acceleration (x-axis)' with points linecolor rgb "#00ff00", \
+accel_dat_f using 1:(($3 + 0.9411)) title 'Acceleration (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#aa00aa" smooth bezier
 
+# cal y accel with the same assumptions as x accel above.
 set ylabel "Acceleration (y-axis) (m/s^2)"
 set y2label "Acceleration (y-axis) (m/s^2)"
 set output out_d.'accel_y.png'
-plot accel_dat_f using 1:6 title 'Acceleration (y-axis)' with points linecolor rgb "#ff0000", \
-accel_dat_f using 1:6 title 'Acceleration (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ffff" smooth bezier
+plot accel_dat_f using 1:(($6 - 0.3751)) title 'Acceleration (y-axis)' with points linecolor rgb "#ff0000", \
+accel_dat_f using 1:(($6 - 0.3751)) title 'Acceleration (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ffff" smooth bezier
 
+# cal z-axis against standard gravity.
+# avg reading across the last 119840 points is 10.2830688417915 m/s²
+# std gravity is currently defined at: 9.80665 m/s²
+# our local deviation is -60 mGal, or 0.0006 m/s², bringing our expected local gravity to 9.80605 m/s²
+# 10.2830688417915 m/s² - 9.80605 m/s² = 0.4770188417915 m/s², so use that as our correction factor.
+# in the end we only work with 2 digits after the decimial, cuz otherwise it would be silly.
 set ylabel "Acceleration (z-axis) (m/s^2)"
 set y2label "Acceleration (z-axis) (m/s^2)"
 set output out_d.'accel_z.png'
-plot accel_dat_f using 1:9 title 'Acceleration (z-axis)' with points linecolor rgb "#0000ff", \
-accel_dat_f using 1:9 title 'Acceleration (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ffff00" smooth bezier
+plot accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis)' with points linecolor rgb "#0000ff", \
+accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ffff00" smooth bezier
 
 set title "Magnetometer Data over the Last \\~48 Hours"
 set ylabel "Magnetic Field Strength (x-axis) (µT)"
