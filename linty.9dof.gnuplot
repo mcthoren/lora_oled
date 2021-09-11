@@ -48,6 +48,13 @@ set output out_d.'accel_z.png'
 plot accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis)' with points linecolor rgb "#0000ff", \
 accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ffff00" smooth bezier
 
+set ylabel "Acceleration (3-axis) (m/s^2)"
+set y2label "Acceleration (3-axis) (m/s^2)"
+set output out_d.'accel_3.png'
+plot accel_dat_f using 1:(($3 + 0.9411)) title 'Acceleration (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ff0000" smooth bezier, \
+accel_dat_f using 1:(($6 - 0.3751)) title 'Acceleration (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ff00" smooth bezier, \
+accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#0000ff" smooth bezier
+
 set title "Magnetometer Data over the Last \\~48 Hours"
 set ylabel "Magnetic Field Strength (x-axis) (µT)"
 set y2label "Magnetic Field Strength (x-axis) (µT)"
@@ -66,6 +73,13 @@ set y2label "Magnetic Field Strength (z-axis) (µT)"
 set output out_d.'mag_z.png'
 plot mag_dat_f using 1:9 title 'Magnetic Field Strength (z-axis)' with points linecolor rgb "#0000ff", \
 mag_dat_f using 1:9 title 'Magnetic Field Strength (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ffff00" smooth bezier
+
+set ylabel "Magnetic Field Strength (3-axis) (µT)"
+set y2label "Magnetic Field Strength (3-axis) (µT)"
+set output out_d.'mag_3.png'
+plot mag_dat_f using 1:3 title 'Magnetic Field Strength (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ff0000" smooth bezier, \
+mag_dat_f using 1:6 title 'Magnetic Field Strength (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ff00" smooth bezier, \
+mag_dat_f using 1:9 title 'Magnetic Field Strength (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#0000ff" smooth bezier
 
 set format y "%.3f"
 set format y2 "%.3f"
@@ -87,3 +101,10 @@ set y2label "Angular Velocity (around the z-axis) (rad/s)"
 set output out_d.'gyro_z.png'
 plot gyro_dat_f using 1:9 title 'Angular Velocity (around the z-axis)' with points linecolor rgb "#0000ff", \
 gyro_dat_f using 1:9 title 'Angular Velocity (around the z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ffff00" smooth bezier
+
+set ylabel "Angular Velocity (around the 3-axis) (rad/s)"
+set y2label "Angular Velocity (around the 3-axis) (rad/s)"
+set output out_d.'gyro_3.png'
+plot gyro_dat_f using 1:3 title 'Angular Velocity (around the x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ff0000" smooth bezier, \
+gyro_dat_f using 1:6 title 'Angular Velocity (around the y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ff00" smooth bezier, \
+gyro_dat_f using 1:9 title 'Angular Velocity (around the z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#0000ff" smooth bezier
