@@ -12,15 +12,19 @@ NDoF_DIR='/import/home/ghz/repos/lora_oled'
 		exit 1
 }
 
+A_PAT="^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\tax:\ -?[0-9]{1,4}\.[0-9]{3}\ m\/s\^2\tay:\ -?[0-9]{1,4}\.[0-9]{3}\ m\/s\^2\taz:\ -?[0-9]{1,4}\.[0-9]{3}\ m\/s\^2$"
+M_PAT="^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\tmx:\ -?[0-9]{1,4}\.[0-9]{3}\ uT\tmy:\ -?[0-9]{1,4}\.[0-9]{3}\ uT\tmz:\ -?[0-9]{1,4}\.[0-9]{3}\ uT$"
+G_PAT="^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\tgx:\ -?[0-9]{1,4}\.[0-9]{3}\ rad\/s\tgy:\ -?[0-9]{1,4}\.[0-9]{3}\ rad\/s\tgz:\ -?[0-9]{1,4}\.[0-9]{3}\ rad\/s$"
+
 # lock is also checked for and deleted on boot, in case of a crash
 touch "${LOCK}"
 
 "${WT_DIR}/grab_48h" "${DAT_DIR}" 9dof_raw.dat
 
-# seive out the 3 diff sensors. this opens up the possibility of stricter REs if necessary.
-grep -a "mx:\ .*\ uT$" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/mag.dat.2-3_day"
-grep -a "gx:\ .*\ rad/s$" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/gyro.dat.2-3_day"
-grep -a "ax:\ .*\ m/s\^2$" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/accel.dat.2-3_day"
+# seive out the 3 diff sensors. Stricter REs are necessary.
+grep -aP "$A_PAT" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/accel.dat.2-3_day"
+grep -aP "$M_PAT" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/mag.dat.2-3_day"
+grep -aP "$G_PAT" "${DAT_DIR}/9dof_raw.dat.2-3_day" > "${DAT_DIR}/gyro.dat.2-3_day"
 
 cd /home/ghz/9dof/plots || exit 1
 gnuplot "${NDoF_DIR}/linty.9dof.gnuplot"
