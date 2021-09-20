@@ -14,6 +14,11 @@ set term pngcairo size 2000, 512 font ",10"
 set format y "%.2f"
 set format y2 "%.2f"
 
+ax_cal='0.9411'
+ay_cal='-0.3751'
+az_cal='-0.4770'
+ag_cal='-9.80605'
+
 accel_dat_f='/home/ghz/9dof/data/accel.dat.2-3_day'
 gyro_dat_f='/home/ghz/9dof/data/gyro.dat.2-3_day'
 mag_dat_f='/home/ghz/9dof/data/mag.dat.2-3_day'
@@ -26,15 +31,15 @@ set title "Accelerometer Data over the Last \\~48 Hours"
 set ylabel "Acceleration (x-axis) (m/s^2)"
 set y2label "Acceleration (x-axis) (m/s^2)"
 set output out_d.'accel_x.png'
-plot accel_dat_f using 1:(($3 + 0.9411)) title 'Acceleration (x-axis)' with points linecolor rgb "#00ff00", \
-accel_dat_f using 1:(($3 + 0.9411)) title 'Acceleration (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#aa00aa" smooth bezier
+plot accel_dat_f using 1:(($3 + ax_cal)) title 'Acceleration (x-axis)' with points linecolor rgb "#00ff00", \
+accel_dat_f using 1:(($3 + ax_cal)) title 'Acceleration (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#aa00aa" smooth bezier
 
 # cal y accel with the same assumptions as x accel above.
 set ylabel "Acceleration (y-axis) (m/s^2)"
 set y2label "Acceleration (y-axis) (m/s^2)"
 set output out_d.'accel_y.png'
-plot accel_dat_f using 1:(($6 - 0.3751)) title 'Acceleration (y-axis)' with points linecolor rgb "#ff0000", \
-accel_dat_f using 1:(($6 - 0.3751)) title 'Acceleration (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ffff" smooth bezier
+plot accel_dat_f using 1:(($6 + ay_cal)) title 'Acceleration (y-axis)' with points linecolor rgb "#ff0000", \
+accel_dat_f using 1:(($6 + ay_cal)) title 'Acceleration (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ffff" smooth bezier
 
 # cal z-axis against standard gravity.
 # avg reading across the last 119840 points is 10.2830688417915 m/s²
@@ -45,15 +50,15 @@ accel_dat_f using 1:(($6 - 0.3751)) title 'Acceleration (y-axis) bezier smoothed
 set ylabel "Acceleration (z-axis) (m/s^2)"
 set y2label "Acceleration (z-axis) (m/s^2)"
 set output out_d.'accel_z.png'
-plot accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis)' with points linecolor rgb "#0000ff", \
-accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ffff00" smooth bezier
+plot accel_dat_f using 1:(($9 + az_cal)) title 'Acceleration (z-axis)' with points linecolor rgb "#0000ff", \
+accel_dat_f using 1:(($9 + az_cal)) title 'Acceleration (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ffff00" smooth bezier
 
 set ylabel "Acceleration (3-axis) (m/s^2)"
 set y2label "Acceleration (3-axis) (m/s^2)"
 set output out_d.'accel_3.png'
-plot accel_dat_f using 1:(($3 + 0.9411)) title 'Acceleration (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ff0000" smooth bezier, \
-accel_dat_f using 1:(($6 - 0.3751)) title 'Acceleration (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ff00" smooth bezier, \
-accel_dat_f using 1:(($9 - 0.4770)) title 'Acceleration (z-axis) bezier smoothed' with lines lw 2 linecolor rgb "#0000ff" smooth bezier
+plot accel_dat_f using 1:(($3 + ax_cal)) title 'Acceleration (x-axis) bezier smoothed' with lines lw 2 linecolor rgb "#ff0000" smooth bezier, \
+accel_dat_f using 1:(($6 + ay_cal)) title 'Acceleration (y-axis) bezier smoothed' with lines lw 2 linecolor rgb "#00ff00" smooth bezier, \
+accel_dat_f using 1:(($9 + az_cal + ag_cal)) title 'Acceleration (z-axis - gravity) bezier smoothed' with lines lw 2 linecolor rgb "#0000ff" smooth bezier
 
 set title "Magnetometer Data over the Last \\~48 Hours"
 set ylabel "Magnetic Field Strength (x-axis) (µT)"
