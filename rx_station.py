@@ -12,7 +12,7 @@
 #
 # Author: Brent Rubell for Adafruit Industries
 
-import time, datetime, sys, busio, board, adafruit_ssd1306, adafruit_rfm9x
+import time, sys, busio, board, adafruit_ssd1306, adafruit_rfm9x
 from digitalio import DigitalInOut, Direction, Pull
 
 sys.path.append('/import/home/ghz/repos/wxlib')
@@ -76,7 +76,7 @@ try:
 			display.fill(0)
 			prev_packet = packet
 			try:
-				ts = datetime.datetime.fromtimestamp(time.time()).strftime("%FT%TZ")
+				ts = time.strftime("%FT%TZ", time.gmtime())
 				packet_text = str(prev_packet, "utf-8")
 				display.text(packet_text, 0, 0, 1)
 				print(packet_text)
