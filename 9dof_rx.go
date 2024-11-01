@@ -6,11 +6,20 @@ LOCK='/home/ghz/9dof/9dof.lock'
 WT_DIR='/import/home/ghz/repos/weather_tools'
 DAT_DIR='/home/ghz/9dof/data'
 NDoF_DIR='/import/home/ghz/repos/lora_oled'
+FLAG_Y="${NDoF_DIR}/CRONFLAG_Y"
 
 [ -e "${LOCK}" ] && {
 	echo "$0: lock exists" | logger
 		exit 1
 }
+
+if [ -e $FLAG_Y ]; then
+	# flag comes from cronjob for the first of the year
+	YDY="$(date -d "-1 year" +%Y)" # XXX not portable
+	# these get big, but are much smaller zipped
+	gzip ${DAT_DIR}/${YDY}/* &
+	rm $FLAG_Y
+fi
 
 A_PAT="^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\tax:\ -?[0-9]{1,4}\.[0-9]{3}\ m\/s\^2\tay:\ -?[0-9]{1,4}\.[0-9]{3}\ m\/s\^2\taz:\ -?[0-9]{1,4}\.[0-9]{3}\ m\/s\^2$"
 M_PAT="^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\tmx:\ -?[0-9]{1,4}\.[0-9]{3}\ uT\tmy:\ -?[0-9]{1,4}\.[0-9]{3}\ uT\tmz:\ -?[0-9]{1,4}\.[0-9]{3}\ uT$"
@@ -31,7 +40,7 @@ gnuplot "${NDoF_DIR}/linty.9dof.gnuplot"
 
 sync
 
-/usr/bin/rsync -ur --timeout=50 --exclude='.git' /home/ghz/9dof/ "${NDoF_DIR}/" \
+/usr/bin/rsync -ur --timeout=50 --exclude='.git' --delete /home/ghz/9dof/ "${NDoF_DIR}/" \
 	wx_0x0a_sync:/wx_0x0a/ # 2> /dev/null
 
 rm "${LOCK}"
