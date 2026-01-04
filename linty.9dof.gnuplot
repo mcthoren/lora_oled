@@ -4,13 +4,13 @@ set mytics
 set y2tics
 set link y2
 set key outside below
-set xlabel "Time (UTC)" offset 0.0, -1.6
+set xlabel "Time (UTC)\n" offset 0.0, -1.6
 set xdata time;
 set format x "%F\n%TZ"
 set timefmt "%Y-%m-%dT%H:%M:%SZ"
 set grid xtics
 set grid y2tics
-set term pngcairo size 2000, 512 font ",10"
+set term pngcairo size 2000, 700 font ",10"
 
 set format y "%.2f"
 set format y2 "%.2f"
